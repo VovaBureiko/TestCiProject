@@ -1,7 +1,7 @@
 winrm set winrm/config/client '@{TrustedHosts="40.87.135.119"}'
 
 $password = convertto-securestring -AsPlainText -Force -String "1234QazWsxEdc";
-$credential = new-object -typename System.Management.Automation.PSCredential -argumentlist "Domain\upingskills",$password;
+$credential = new-object -typename System.Management.Automation.PSCredential -argumentlist "Domain\upingskills", $password;
 $session = New-PSSession -ComputerName 40.87.135.119 -port 5985 -Credential $credential;
 $websitePath = 'C:\TestCISite\';
 $artefactPath = 'C:\TeamCity\buildAgent\work\cfb7413927a8802c\publish\*';
@@ -15,10 +15,9 @@ function DeploySite {
         Stop-WebAppPool -Name $using:webSitePool;
         Write-Information -Message "Website ${$using:websiteName} is stopped";
         Remove-Item -Path $using:websitePath -Recurse;
-                                } -Session $session;
-    Write-Information -Message "Starting deploing artefacts";
+        Write-Information -Message "Starting deploing artefacts";
+    } -Session $session;
     Copy-Item -Path $artefactPath -Destination $websitePath -ToSession $session;
-    Write-Information -Message "Starting are deployed";
     Invoke-Command -ScriptBlock {
         Start-Website -Name $using:websiteName;
         Start-WebAppPool -Name $using:webSitePool;
