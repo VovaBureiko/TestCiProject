@@ -7,30 +7,30 @@ $webSitePool = 'DefaultAppPool';
 $websiteName = 'TestCISyte';
 
 function DeploySite {
-    Write-Information -Message "Start deploy files";
+    Write-Information -MessageData "Start deploy files";
     Invoke-Command -ScriptBlock {
-        Stop-Website -Name $using:websiteName;
         Stop-WebAppPool -Name $using:webSitePool;
-        Write-Information -Message "Website ${$using:websiteName} is stopped";
+        Stop-Website -Name $using:websiteName;
+        Write-Information -MessageData "Website ${$using:websiteName} is stopped";
         Remove-Item -Path $using:websitePath -Recurse;
-        Write-Information -Message "Starting deploing artefacts";
+        Write-Information -MessageData "Starting deploing artefacts";
     } -Session $session;
     Copy-Item -Path $artefactPath -Destination $websitePath -ToSession $session;
     Invoke-Command -ScriptBlock {
         Start-Website -Name $using:websiteName;
         Start-WebAppPool -Name $using:webSitePool;
     } -Session $session;
-    Write-Information -Message "Website ${$using:websiteName} is working now";
+    Write-Information -MessageData "Website ${$using:websiteName} is working now";
 }
 
 
 try {
     if (Invoke-Command -ScriptBlock { Test-Path -Path $using:websitePath} -Session $session) {
-        Write-Information -Message "Folder is enable";
+        Write-Information -MessageData "Folder is enable";
         DeploySite;
     }
     else {
-        Write-Information -Message "Folder is not enabled";
+        Write-Information -MessageData "Folder is not enabled";
         Invoke-Command -ScriptBlock {New-Item -ItemType Directory -Path ${$using:websitePath;} } -Session $session;
         DeploySite;
     }
