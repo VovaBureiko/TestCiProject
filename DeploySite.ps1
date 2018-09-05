@@ -2,7 +2,7 @@ Get-Item WSMan:\localhost\Client\TrustedHosts;
 
 $password = convertto-securestring -AsPlainText -Force -String "1234QazWsxEdc";
 $credential = new-object -typename System.Management.Automation.PSCredential -argumentlist "upingskills",$password;
-$session = New-PSSession -ComputerName 40.87.135.119 -port 5985 -Credential @credential;
+$session = New-PSSession -ComputerName 40.87.135.119 -port 5985 -Credential $credential;
 $websitePath = 'C:\TestCISite\';
 $artefactPath = 'C:\TeamCity\buildAgent\work\cfb7413927a8802c\publish\*';
 $webSitePool = 'DefaultAppPool';
