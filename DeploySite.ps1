@@ -1,4 +1,4 @@
-Get-Item WSMan:\localhost\Client\TrustedHosts;
+winrm set winrm/config/client '@{TrustedHosts="40.87.135.119"}'
 
 $password = convertto-securestring -AsPlainText -Force -String "1234QazWsxEdc";
 $credential = new-object -typename System.Management.Automation.PSCredential -argumentlist "upingskills",$password;
