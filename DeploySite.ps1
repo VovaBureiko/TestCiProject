@@ -26,7 +26,7 @@ param(
 
     function StartDeploySite {
         $password = convertto-securestring -AsPlainText -Force -String $pas;
-        $credential = new-object -typename System.Management.Automation.PSCredential -argumentlist $user $password;
+        $credential = new-object -typename System.Management.Automation.PSCredential -argumentlist $user, $password;
         $session = New-PSSession -ComputerName $ip -Port $port -Credential $credential;
     
         try {
