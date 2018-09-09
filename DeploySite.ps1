@@ -62,4 +62,5 @@ param(
         Write "Website ${$using:site} is working now";
     }
 
+    Write-Host $port;
     StartDeploySite;
