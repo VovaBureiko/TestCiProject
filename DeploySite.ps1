@@ -51,7 +51,7 @@ param(
             Stop-WebAppPool -Name $using:pool;
             Stop-Website -Name $using:site;
             Write "Website ${$using:site} is stopped";
-            Remove-Item -Path $using:webPath; -Recurse;
+            Remove-Item -Path $using:webPath -Recurse;
             Write "Starting deploing artefacts";
         } -Session $session;
         Copy-Item -Path $artPath -Destination $webPath; -ToSession $session;
