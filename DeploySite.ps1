@@ -31,35 +31,36 @@ param(
     
         try {
             if (Invoke-Command -ScriptBlock { Test-Path -Path $using:webPath;} -Session $session) {
-                Write "Folder is enable";
+                Write-Host "Folder is enable";
                 DeploySite;
             }
             else {
-                Write "Folder is not enabled";
+                Write-Host "Folder is not enabled";
                 Invoke-Command -ScriptBlock {New-Item -ItemType Directory -Path $using:webPath; } -Session $session;
                 DeploySite;
             }
         }
         catch {
             $ErrorMessage = $_.Exception.Message;
+            Write-Error $ErrorMessage;
         }
     
     }
     function DeploySite {
-        Write "Start deploy files";
+        Write-Host "Start deploy files";
         Invoke-Command -ScriptBlock {
             Stop-Website -Name $using:site;
             Stop-WebAppPool -Name $using:pool;
-            Write "Website ${$using:site} is stopped";
+            Write-Host "Website ${$using:site} is stopped";
             Remove-Item -Path $using:webPath -Recurse;
-            Write "Starting deploing artefacts";
+            Write-Host "Starting deploing artefacts";
         } -Session $session;
         Copy-Item -Path $artPath -Destination $webPath; -ToSession $session;
         Invoke-Command -ScriptBlock {
             Start-Website -Name $using:site;
             Start-WebAppPool -Name $using:pool;
         } -Session $session;
-        Write "Website ${$using:site} is working now";
+        Write-Host "Website ${$using:site} is working now";
     }
 
     Write-Host $port;
