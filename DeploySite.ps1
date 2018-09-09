@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $true)]
-    [string]
+    [string[]]
     $ip,
     [Parameter(Mandatory = $true)]
     [int]
