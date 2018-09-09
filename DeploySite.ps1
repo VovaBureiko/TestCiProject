@@ -55,7 +55,7 @@ param(
             Remove-Item -Path $using:webPath -Recurse;
             Write-Host "Starting deploing artefacts";
         } -Session $session;
-        Copy-Item -Path $artPath -Destination $webPath; -ToSession $session;
+        Copy-Item -Path $artPath -Destination $webPath -ToSession $session;
         Invoke-Command -ScriptBlock {
             Start-Website -Name $using:site;
             Start-WebAppPool -Name $using:pool;
@@ -63,5 +63,4 @@ param(
         Write-Host "Website ${$using:site} is working now";
     }
 
-    Write-Host $port;
     StartDeploySite;
