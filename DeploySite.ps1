@@ -1,10 +1,10 @@
-$password = convertto-securestring -AsPlainText -Force -String env.pasw;
-$credential = new-object -typename System.Management.Automation.PSCredential -argumentlist "Domain\upingskills", $password;
-$session = New-PSSession -ComputerName 40.87.135.119 -port 5985 -Credential $credential;
-$websitePath = 'C:\TestCISite\';
-$artefactPath = 'C:\TeamCity\buildAgent\work\cfb7413927a8802c\publish\*';
-$webSitePool = 'DefaultAppPool';
-$websiteName = 'TestCISyte';
+$password = convertto-securestring -AsPlainText -Force -String $pasw;
+$credential = new-object -typename System.Management.Automation.PSCredential -argumentlist $user $password;
+$session = New-PSSession -ComputerName $ip -port $port -Credential $credential;
+$websitePath = $webPath;
+$artefactPath = $artPath;
+$webSitePool = $pool;
+$websiteName = $site;
 
 function DeploySite {
     Write "Start deploy files";
