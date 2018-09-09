@@ -30,13 +30,13 @@ param(
         $session = New-PSSession -ComputerName $ip -Port $port -Credential $credential;
     
         try {
-            if (Invoke-Command -ScriptBlock { Test-Path -Path $using:webPath} -Session $session) {
+            if (Invoke-Command -ScriptBlock { Test-Path -Path $using:webPath;} -Session $session) {
                 Write "Folder is enable";
                 DeploySite;
             }
             else {
                 Write "Folder is not enabled";
-                Invoke-Command -ScriptBlock {New-Item -ItemType Directory -Path ${$using:webPath;} } -Session $session;
+                Invoke-Command -ScriptBlock {New-Item -ItemType Directory -Path $using:webPath; } -Session $session;
                 DeploySite;
             }
         }
@@ -48,8 +48,8 @@ param(
     function DeploySite {
         Write "Start deploy files";
         Invoke-Command -ScriptBlock {
-            Stop-WebAppPool -Name $using:pool;
             Stop-Website -Name $using:site;
+            Stop-WebAppPool -Name $using:pool;
             Write "Website ${$using:site} is stopped";
             Remove-Item -Path $using:webPath -Recurse;
             Write "Starting deploing artefacts";
