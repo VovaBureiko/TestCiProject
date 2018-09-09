@@ -3,7 +3,7 @@ param(
     [string]
     $ip,
     [Parameter(Mandatory = $true)]
-    [string]
+    [int]
     $port,
     [Parameter(Mandatory = $true)]
     [string]
