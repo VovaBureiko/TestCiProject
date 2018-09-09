@@ -3,7 +3,7 @@ param(
     [string]
     $ip,
     [Parameter(Mandatory = $true)]
-    [int]
+    [string]
     $port,
     [Parameter(Mandatory = $true)]
     [string]
@@ -22,10 +22,10 @@ param(
     $user,
     [Parameter(Mandatory = $true)]
     [string]
-    $pasw)
+    $pas)
 
     function StartDeploySite {
-        $password = convertto-securestring -AsPlainText -Force -String $pasw;
+        $password = convertto-securestring -AsPlainText -Force -String $pas;
         $credential = new-object -typename System.Management.Automation.PSCredential -argumentlist $user $password;
         $session = New-PSSession -ComputerName $ip -port $port -Credential $credential;
     
